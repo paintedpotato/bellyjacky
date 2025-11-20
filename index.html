@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Journal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #111; color: white; overflow-x: hidden; }
+
+    /* LOGIN PAGE */
+    #login-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #111;
+      z-index: 20;
+    }
+
+    .marquee {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      opacity: 0.25;
+      z-index: -1;
+      display: flex;
+      align-items: center;
+      animation: slide 25s linear infinite;
+    }
+
+    @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .marquee-track {
+      display: flex;
+      gap: 40px;
+      transform: skewY(-8deg) rotateY(20deg);
+    }
+
+    .marquee img {
+      width: 280px;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .login-box {
+      background: rgba(0,0,0,0.65);
+      padding: 40px;
+      border-radius: 16px;
+      width: 320px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    }
+
+    .login-box h2 { text-align: center; margin-bottom: 20px; font-size: 26px; }
+    .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 8px; font-size: 16px; }
+    .login-box button { width: 100%; padding: 12px; background: #ff6fa8; border: none; border-radius: 8px; color: white; font-size: 18px; cursor: pointer; transition: 0.3s; }
+    .login-box button:hover { background: #ff89bb; }
+    .error { text-align: center; color: #ff6f6f; margin-top: 8px; font-size: 14px; }
+
+    /* GALLERY */
+    #gallery {
+      display: none;
+      padding-top: 20px;
+      background: #fafafa;
+      color: #000;
+    }
+
+    .masonry {
+      column-count: 4;
+      column-gap: 0;
+      width: 100vw;
+    }
+
+    .photo {
+      width: 100%;
+      display: block;
+      margin: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+      break-inside: avoid;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+
+    .h1 { height: 60vh; }
+    .h2 { height: 75vh; }
+    .h3 { height: 90vh; }
+    .h4 { height: 55vh; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen">
+    <div class="marquee">
+      <div class="marquee-track">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" />
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" />
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba" />
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" />
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" />
+
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" />
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" />
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba" />
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" />
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" />
+      </div>
+    </div>
+
+    <div class="login-box">
+      <h2>Welcome</h2>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Enter</button>
+      <div class="error" id="error"></div>
+    </div>
+  </div>
+
+  <!-- MAIN GALLERY -->
+  <div id="gallery">
+    <div class="masonry">
+      <div class="photo h1" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee');"></div>
+      <div class="photo h2" style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');"></div>
+      <div class="photo h3" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba');"></div>
+      <div class="photo h4" style="background-image:url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e');"></div>
+      <div class="photo h3" style="background-image:url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05');"></div>
+      <div class="photo h1" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330');"></div>
+      <div class="photo h2" style="background-image:url('https://images.unsplash.com/photo-1503264116251-35a269479413');"></div>
+      <div class="photo h3" style="background-image:url('https://images.unsplash.com/photo-1487412912498-0447578fcca8');"></div>
+      <div class="photo h4" style="background-image:url('https://images.unsplash.com/photo-1535930749574-1399327ce78f');"></div>
+      <div class="photo h1" style="background-image:url('https://images.unsplash.com/photo-1452570053594-1b985d6ea890');"></div>
+      <div class="photo h2" style="background-image:url('https://images.unsplash.com/photo-1502082553048-f009c37129b9');"></div>
+      <div class="photo h3" style="background-image:url('https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb');"></div>
+      <div class="photo h4" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429');"></div>
+      <div class="photo h1" style="background-image:url('https://images.unsplash.com/photo-1499084732479-de2c02d45fc4');"></div>
+      <div class="photo h2" style="background-image:url('https://images.unsplash.com/photo-1508672019048-805c876b67e2');"></div>
+      <div class="photo h3" style="background-image:url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d');"></div>
+      <div class="photo h4" style="background-image:url('https://images.unsplash.com/photo-1500534623283-312aade485b7');"></div>
+      <div class="photo h3" style="background-image:url('https://images.unsplash.com/photo-1470813740244-df37b8c1edcb');"></div>
+      <div class="photo h1" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa');"></div>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if (user === 'belinda' && pass === 'xyz123') {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('gallery').style.display = 'block';
+      } else {
+        document.getElementById('error').textContent = 'Incorrect credentials. Try again.';
+      }
+    }
+  </script>
+
+</body>
+</html>
